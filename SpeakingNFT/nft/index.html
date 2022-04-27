@@ -1,0 +1,48 @@
+<html>
+<script>
+  function hello() {
+    document.getElementById("message").innerHTML = "hello!!";
+  }
+</script>
+<style>
+  #canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 420px;
+    height: 420px;
+    background-color: lightskyblue;
+  }
+  #speakingButton {
+    position: absolute;
+    display: block;
+    top: 30%;
+    left: 20%;
+    right: 20%;
+    height: 50px;
+    border: none;
+    background-color: lightcyan;
+  }
+  #message {
+    position: absolute;
+    display: block;
+    bottom: 30%;
+    left: 20%;
+    right: 20%;
+    height: 20px;
+    border: none;
+    background-color: lightcyan;
+    text-align: center;
+    color: black;
+  }
+</style>
+
+<body>
+  <div id="canvas">
+    <button id="speakingButton" type="button" onclick="hello();">speak</button>
+    <p id="message">....</p>  
+  </div>
+</body>
+
+</html>
