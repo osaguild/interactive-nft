@@ -1,4 +1,4 @@
-# on chain nft
+# on chain nft back end
 
 ## set up
 - `truffle init`
