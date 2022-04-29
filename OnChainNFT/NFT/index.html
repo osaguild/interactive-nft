@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+  <script>
+    let currentAccount;
+    const address = "0x833c9f7e5a70614081b8e11351544295d0b3ab62";
+    const abi = [
+      "function getVoteCounts(address _owner) external view returns (uint256)",
+    ];
+
+    window.onload = async function () {
+      await connectWallet();
+      await getVoteCounts();
+    }
+
+    async function connectWallet() {
+      try {
+        if (!window.ethereum) {
+          alert("you need metamask to use Dapp");
+          return;
+        }
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const accounts = await provider.send("eth_requestAccounts", []);
+        console.log("Connected", accounts[0]);
+        this.currentAccount = accounts[0];
+      } catch (error) {
+        console.log("reject your connection request", error);
+      }
+    }
+
+    async function getVoteCounts() {
+      try {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const Contract = await new ethers.Contract(
+          address,
+          abi,
+          provider
+        );
+
+        const count = await Contract.getVoteCounts(this.currentAccount);
+        const canvas = document.getElementById("canvas");
+
+        if (count == 1) {
+          canvas.classList.add("one");
+        } else if (count == 2) {
+          canvas.classList.add("two");
+        } else if (count >= 3) {
+          canvas.classList.add("over-three");
+        }
+      } catch (error) {
+        console.log("failed contract", error);
+      }
+    }
+  </script>
+  <style>
+    #canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      width: 420px;
+      height: 420px;
+      text-align: center;
+      font-size: 70px;
+      font-family: sans-serif;
+    }
+
+    #canvas div {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+    }
+
+    .one {
+      background-color: lightskyblue;
+    }
+
+    .two {
+      background-color: lightyellow;
+    }
+
+    .over-three {
+      background-color: lightpink;
+    }
+  </style>
+  <title>OnChain NFT</title>
+</head>
+
+<body>
+  <div id="canvas">
+    <div>TYPE A</div>
+  </div>
+</body>
+
+</html>
