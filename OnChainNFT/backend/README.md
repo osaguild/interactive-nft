@@ -10,6 +10,7 @@
 ## compile and deploy
 - `truffle develop`
 - `compile`
+- `migrate`
 
 ## sample script
 - mint
