@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <div id="canvas">
-      <div id="count">{{ count }}</div>
+    <div id="canvas" v-bind:style="{backgroundColor: backgroundColor}">
+      <div>TYPE A</div>
     </div>
   </div>
 </template>
@@ -13,12 +13,12 @@ export default {
   name: "App",
   data() {
     return {
-      address: "0x9970b41aA75530A92D96591D08fCa405acb62A09",
+      address: "0x833c9f7e5a70614081b8e11351544295d0b3ab62",
       abi: [
         "function getVoteCounts(address _owner) external view returns (uint256)",
       ],
       currentAccount: null,
-      count: 0,
+      backgroundColor: null,
     };
   },
   mounted: async function () {
@@ -34,7 +34,16 @@ export default {
           this.abi,
           provider
         );
-        this.count = await Contract.getVoteCounts(this.currentAccount);
+
+        const count = await Contract.getVoteCounts(this.currentAccount);
+
+        if (count == 1) {
+          this.backgroundColor = "lightskyblue";
+        } else if (count == 2) {
+          this.backgroundColor = "lightyellow";
+        } else if (count >= 3) {
+          this.backgroundColor = "lightpink";
+        }
       } catch (error) {
         console.log("failed contract", error);
       }
@@ -65,17 +74,15 @@ export default {
   z-index: -1;
   width: 420px;
   height: 420px;
-  background-color: lightskyblue;
-}
-#count {
-  position: absolute;
-  display: block;
-  top: 30%;
-  left: 20%;
-  right: 20%;
-  height: 50px;
-  border: none;
   text-align: center;
-  background-color: lightcyan;
+  font-size: 70px;
+  font-family: sans-serif;
+}
+#canvas div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
 }
 </style>
