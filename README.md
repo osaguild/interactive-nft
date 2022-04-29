@@ -38,6 +38,7 @@ test code and tips for interactive nft on open sea
 - create new contract like `Osaguild.sol`
 - select `solidity compiler` menu and compile contract
 - select `deploy & run transactions` menu and connect metamask
+- environment is `injected Web3`
 - click `deploy`
 - contract is deployed
 
